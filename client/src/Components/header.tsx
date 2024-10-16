@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 export default function Header() {
 
     const pathName = usePathname()
-
     return (
         <>
         <header className="bg-blue-500 p-4">
