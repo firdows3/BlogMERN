@@ -28,10 +28,17 @@ export default function Signup() {
         try {
             const response = await axios.post('http://localhost:5173/Signup', formData)
             router.push('/login')
-            console.log(response);
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const isFormValid = () => {
+        return (
+            formData.username.trim() !== '' ||
+            formData.email.trim() !== '' ||
+            formData.password.trim() !==''
+        )
     }
 
     return (
@@ -46,7 +53,7 @@ export default function Signup() {
                 <div className="mb-4">
                     <input type="password" className={inputClass} name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
                 </div>
-                <button type="submit" className="bg-blue-500 hover:bg-blur-600 text-white font-bold py-2 px-4 rounded-md fovus:outline-none focus:ring focus:border-blue-300 w-full disabled:bg-gray-400">Submit</button>
+                <button type="submit" className="bg-blue-500 hover:bg-blur-600 text-white font-bold py-2 px-4 rounded-md fovus:outline-none focus:ring focus:border-blue-300 w-full disabled:bg-gray-400" disabled={!isFormValid()}>Submit</button>
             </form>
             <p className="max-w-md mx-auto p-4 text-small text-gray-500 text-center">Already have an account ?<Link href='/login'>Login</Link></p>
         </div>

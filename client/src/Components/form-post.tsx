@@ -11,7 +11,7 @@ export default function FormPost() {
 
     const [formData, setFormData] = useState({
         title: '',
-        content: ''
+        content: '',
     })
     const router = useRouter()
 
@@ -41,6 +41,13 @@ export default function FormPost() {
         }
     }
 
+    const isFormValid = () => {
+        return (
+            formData?.title.trim() !== '' ||
+            formData?.content.trim() !== ''
+        )
+    }
+
     return (
         <>
             <form className="max-w-md mx-auto p-4" onSubmit={handleSubmit}>
@@ -50,7 +57,7 @@ export default function FormPost() {
                 <div className="mb-4">
                     <textarea className={inputClass} placeholder="Enter the content" name="content" value={formData.content} onChange={handleChange} />
                 </div>
-                <button type="submit" className="bg-blue-500 hover:bg-blur-600 text-white font-bold py-2 px-4 rounded-md fovus:outline-none focus:ring focus:border-blue-300 w-full disabled:bg-gray-400">Submit</button>
+                <button type="submit" className="bg-blue-500 hover:bg-blur-600 text-white font-bold py-2 px-4 rounded-md fovus:outline-none focus:ring focus:border-blue-300 w-full disabled:bg-gray-400" disabled={!isFormValid()}>Submit</button>
             </form>
         </>
     )

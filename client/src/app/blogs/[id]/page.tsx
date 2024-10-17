@@ -18,6 +18,7 @@ export default function BlogDetail({ params }: { params: { id: String } }) {
         try {
             const response = await axios.get(`http://localhost:5173/blogPost/${params.id}`)
             setEachPost(response.data)
+            
         } catch (error) {
             console.log(error);
         }
@@ -26,11 +27,6 @@ export default function BlogDetail({ params }: { params: { id: String } }) {
     useEffect(() => {
         fetchPost()
     }, [])
-
-    useEffect(() => {
-        console.log(eachPost);
-
-    }, [eachPost])
 
     return (
         <>
@@ -41,8 +37,8 @@ export default function BlogDetail({ params }: { params: { id: String } }) {
                     <h6 className="text-gray-500 text-right">written by: {eachPost?.username}</h6>
                 </div>
             </div>
-            {/* <Comments /> */}
-            <FormComments />
+            <Comments postId={params.id} />
+            <FormComments postId={params.id} />
         </>
     )
 }

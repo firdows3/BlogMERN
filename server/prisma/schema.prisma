@@ -14,23 +14,27 @@ datasource db {
 }
 
 model User {
-  id String @id@default(uuid())
-  email String @unique
-  username String?
-  password String 
-  createdAt DateTime @default(now()) 
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String?
+  password  String
+  createdAt DateTime @default(now())
 }
 
 model Post {
-  id String @id@default(uuid())
-  title String?
-  content String?
-  username String?
-  createdAt DateTime @default(now()) 
+  id        String    @id @default(uuid())
+  title     String?
+  content   String?
+  username  String?
+  createdAt DateTime  @default(now())
+  image     String?
+  comments  Comment[]
 }
 
 model Comment {
-  id String @id@default(uuid())
+  id       String  @id @default(uuid())
+  postId   String
   username String?
-  comment String?
+  comment  String?
+  post     Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
 }

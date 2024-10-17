@@ -60,6 +60,10 @@ app.post('/Login', async(req, res) => {
     }
 })
 
+app.post('/logout', async(req, res) => {
+    res.cookie('token', '', {httpOnly: true}).status(200).json('logout successful')
+})
+
 app.get('/blogPost', async(req, res)=>{
     
     const token = req.headers['authorization']?.split(' ')[1];
@@ -87,7 +91,6 @@ app.put('/editBlogPost/:id', async(req, res) => {
     const {title, content} = req.body;
 
     const token = req.headers['authorization']?.split(' ')[1];
-    console.log(req.headers);
     
     if (!token) {
         res.status(401).json('unauthorized')
@@ -208,17 +211,32 @@ app.post('/blogPost', authenticateToken, async(req, res)=>{
 })
 
 app.post('/comments', authenticateToken, async(req, res) => {
-    const {comment} = req.body
+    const {postId, comment} = req.body
     const username = req.user.username
+    
 
     try {
         const newComment = await prisma.comment.create({
             data: {
+                postId,
                 comment,
                 username
             }
         })
         res.status(201).json(newComment)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json(error)
+    }
+})
+
+app.get('/comments/:postId', async(req, res) => {
+    const {postId} = req.params
+    try {
+        const comments = await prisma.comment.findMany({
+            where: {postId: postId}
+        })
+        res.status(200).json(comments)
     } catch (error) {
         console.error(error)
         res.status(500).json(error)

@@ -36,6 +36,13 @@ export default function Login() {
         }
     }
 
+    const isFormValid = () => {
+        return (
+            formData.email.trim() !== '' ||
+            formData.password.trim() !== ''
+        )
+    }
+
     return (
         <div className="mt-20">
             <form className="max-w-md mx-auto p-4" onSubmit={handleSubmit}>
@@ -45,7 +52,7 @@ export default function Login() {
                 <div className="mb-4">
                     <input type="password" className={inputClass} name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
                 </div>
-                <button type="submit" className="bg-blue-500 hover:bg-blur-600 text-white font-bold py-2 px-4 rounded-md fovus:outline-none focus:ring focus:border-blue-300 w-full disabled:bg-gray-400">Submit</button>
+                <button type="submit" className="bg-blue-500 hover:bg-blur-600 text-white font-bold py-2 px-4 rounded-md fovus:outline-none focus:ring focus:border-blue-300 w-full disabled:bg-gray-400" disabled={!isFormValid()}>Submit</button>
             </form>
             <p className="max-w-md mx-auto p-4 text-small text-gray-500 text-center">Create account ?<Link href='/signup'>Signup</Link></p>
         </div>

@@ -50,7 +50,6 @@ export default function BlogDetail({ params }: { params: { id: String } }) {
 
     const handleEdit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(params.id);
         
         try {
             const response = await axios.put(`http://localhost:5173/editBlogPost/${params.id}`, editingData, {
@@ -95,7 +94,6 @@ export default function BlogDetail({ params }: { params: { id: String } }) {
         }
         else setEditingData({title: '', content:''})
     }, [eachPost])
-
 
     return (
         <>
